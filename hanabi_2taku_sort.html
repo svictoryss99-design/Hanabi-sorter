@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang='ja'><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>花火2択ソート</title><style>
+body{font-family:sans-serif;background:#0b1633;color:#fff;display:flex;justify-content:center}
+#app{max-width:600px;width:100%;padding:20px}button{width:100%;padding:16px;margin:10px 0;font-size:20px;border-radius:12px}
+</style><div id='app'><h1>🎆 花火2択ソート</h1><div id='q'></div><button id='a'></button><button id='b'></button></div>
+<script>
+const items=["もう一回打ち上げるドン","💪花火追加だドン","❤️追い花火or追い火薬","😭あつまれ消えない花火職人","👍エンドレス花火","😂やけどしに行く","🔥花火エターナル","🎉想いは1億尺玉"];
+let scores=Array(items.length).fill(0),pairs=[];
+for(let i=0;i<items.length;i++)for(let j=i+1;j<items.length;j++)pairs.push([i,j]);
+pairs.sort(()=>Math.random()-0.5);let idx=0;
+function show(){
+ if(idx>=pairs.length){
+  let r=items.map((n,i)=>({n,s:scores[i]})).sort((a,b)=>b.s-a.s);
+  document.getElementById('app').innerHTML="<h2>結果</h2><ol>"+r.map(x=>"<li>"+x.n+"</li>").join("")+"</ol><button onclick='location.reload()'>もう一度</button>";return;}
+ let [i,j]=pairs[idx];
+ q.textContent=`${idx+1}/${pairs.length} どっちが好き？`;
+ a.textContent=items[i]; b.textContent=items[j];
+ a.onclick=()=>{scores[i]++;idx++;show()}; b.onclick=()=>{scores[j]++;idx++;show()};
+}
+show();
+</script>
